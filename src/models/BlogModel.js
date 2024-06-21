@@ -23,11 +23,11 @@ const blogSchema = mongoose.Schema({
         required: true
     },
     author: {
-        type: String,
-        required: true // Come back later and replace this with a Mongoose object ID
+        type: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        required: true 
     },
     likes: {
-        type: [String], // Come back later and replace this with a Mongoose object ID
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}], 
         required: false
     },
     headerImage: {
