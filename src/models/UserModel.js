@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { commentSchema } = require('./CommentSchema');
 
 const userSchema = mongoose.Schema({
     username: {
@@ -6,11 +7,15 @@ const userSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    niewHistory: {
+    viewHistory: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Blog"}],
         required: false,
         unique: false
-    }
+    },
+    comments: {
+        type: [commentSchema],
+        required: false
+    }    
 });
 
 const UserModel = mongoose.model("User", userSchema);
