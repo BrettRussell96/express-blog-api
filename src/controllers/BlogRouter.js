@@ -11,6 +11,12 @@ router.get("/", async (request, response, next) => {
     });
 });
 
+router.get("/:id", (request, response, next) => {
+    response.json({
+        message: "Blog router homepage"
+    });
+});
+
 router.post("/", (request, response, next) => {
     response.json({
         message: "Blog router homepage"
