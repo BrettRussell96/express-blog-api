@@ -25,7 +25,7 @@ app.get("*", (request, response, next) => {
 
 
 app.use((error, request, response, next) => {
-    response.json({
+    response.status(400).json({
         message: "Error occured!",
         error: error.message
     });
