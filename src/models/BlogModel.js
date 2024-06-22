@@ -17,14 +17,16 @@ const { commentSchema } = require('./CommentSchema.js');
 const blogSchema = mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     content: {
         type: String,
         required: true
     },
     author: {
-        type: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true 
     },
     likes: {

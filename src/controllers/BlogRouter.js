@@ -1,13 +1,15 @@
 const express = require('express');
 const { BlogModel } = require('../models/BlogModel');
+const { UserModel } = require('../models/UserModel');
 const router = express.Router();
 
 router.get("/", async (request, response, next) => {
 
-    let result = await BlogModel.find({}).exec();
+    let result = await BlogModel.find({}).populate("author").exec();
 
     response.json({
-        message: "Blog router homepage"
+        message: "Blog router homepage",
+        result: result
     });
 });
 
