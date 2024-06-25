@@ -23,6 +23,7 @@ router.get("/findById/:id", async (request, response, next) => {
     });
 });
 
+
 router.post("/findOneQuery", async (request, response, next) => {
 
     let result = await BlogModel.findOne(request.body).populate("author").exec();
@@ -42,7 +43,6 @@ router.post("/findManyQuery", async (request, response, next) => {
         result: result
     });
 });
-
 
 router.post("/", async (request, response, next) => {
 
