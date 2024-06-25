@@ -1,5 +1,6 @@
 const { BlogModel } = require("../models/BlogModel");
 const { UserModel } = require("../models/UserModel");
+const { comparePasswords, createJwt, validateJwt } = require("./authHelpers");
 const { databaseConnect, databaseClear, databaseClose } = require("./database");
 
 
@@ -26,8 +27,19 @@ async function seedUsers () {
     console.log("Calling save() on created user:");
     await callum.save();
 
+    console.log("Callum's encrypted password is: " + callum.password);
+    let doesSupercoolMatch = await comparePasswords("Supercool", callum.password);
+    console.log("Callum's password is supercool: " + doesSupercoolMatch);
+
     console.log("Creating users from insertMany():");
-	let result = await UserModel.insertMany(userData)
+	let result = await UserModel.insertMany(userData);
+
+    /* If we wanted pre-save on the insertMany, this is the code to do it: 
+    // console.log("Creating users in bulk by Promise.all over usermodel.create:");
+    // let result = await Promise.all(userData.map(async (user) => {
+    //     let newUser = await UserModel.create(user);
+    //     return newUser;
+    // })); */
 	console.log([...result, callum]);
 	return [...result, callum];
 }
@@ -74,6 +86,11 @@ async function seed(){
 
 	let newUsers = await seedUsers();
 	let newBlogs = await seedBlogPosts(newUsers);
+
+    let newJwt = createJwt(newUsers[0]._id);
+    console.log("New JWT: " + newJwt);
+
+    validateJwt(newJwt);
 
 	console.log("Seeded data!");
 	await databaseClose();
