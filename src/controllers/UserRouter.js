@@ -1,6 +1,6 @@
 const express = require('express');
 const { UserModel } = require('../models/UserModel');
-const { comparePasswords } = require('../utils/authHelpers.js');
+const { comparePasswords, createJwt } = require('../utils/authHelpers.js');
 const router = express.Router();
 
 router.get("/", async (request, response, next) => {
@@ -50,13 +50,16 @@ router.post("/", async (request, response, next) => {
         error.status = 400;
         return next(error)});
     
+    let jwt = createJwt(result._id);
+    
     if (result.errors){
         return next(result);
     }
 
     response.json({
         message: "User router operation",
-        result: result
+        result: result,
+        jwt: jwt
     });
 });
 
