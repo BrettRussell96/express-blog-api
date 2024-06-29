@@ -1,11 +1,11 @@
 meta {
-  name: Create new user
+  name: Login as user
   type: http
-  seq: 6
+  seq: 7
 }
 
 post {
-  url: http://localhost:3000/users/
+  url: http://localhost:3000/users/jwt/
   body: json
   auth: none
 }
